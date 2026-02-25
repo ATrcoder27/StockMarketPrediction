@@ -9,6 +9,10 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.neural_network import MLPRegressor
 from sklearn import neighbors
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense, Dropout
+import itertools
 
 ticker = yf.Ticker(input("Ticker: "))
 ticker_df = ticker.history(period="5y")
@@ -222,4 +226,5 @@ final_price = float(np.ravel(Y[time])[0])
 money = money + stocks * final_price
 
 print(f"Final Amount: {ticker.info['currency']}", money)
+
 
