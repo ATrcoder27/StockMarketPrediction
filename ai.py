@@ -73,6 +73,45 @@ knnMAE = mean_absolute_error(Y_test, knnPred)
 print("K Nearest Neighbors MSE: ", knnMSE)
 print("K Nearest Neighbors MAE: ", knnMAE)
 
+X_np = np.array(X)
+Y_np = np.array(Y)
+
+X_lstm = X_np.reshape((X_np.shape[0], 3, 2))
+
+X_train_lstm, X_test_lstm, Y_train_lstm, Y_test_lstm = train_test_split(
+    X_lstm, Y_np, test_size=0.2, shuffle=False
+)
+
+print("Train samples:", len(X_train_lstm))
+print("Test samples:", len(X_test_lstm))
+
+lstm = Sequential()
+lstm.add(LSTM(128, return_sequences=False, input_shape=(3, 2)))
+lstm.add(Dropout(0.1))
+lstm.add(Dense(32, activation='relu'))
+lstm.add(Dense(1))
+
+lstm.compile(optimizer='adam', loss='mse')
+
+history = lstm.fit(
+    X_train_lstm, Y_train_lstm,
+    validation_data=(X_test_lstm, Y_test_lstm),
+    epochs=20,
+    batch_size=8,
+    verbose=1
+)
+
+lstmp = lstm.predict(X_lstm).flatten()
+lstmPred = lstm.predict(X_test_lstm).flatten()
+
+lstmMSQ = mean_squared_error(Y_test_lstm, lstmPred)
+lstmMAE = mean_absolute_error(Y_test_lstm, lstmPred)
+
+print("\nLSTM RESULTS")
+print("LSTM MSE:", lstmMSQ)
+print("LSTM MAE:", lstmMAE)
+
+
 print("")
 print("")
 print("")
@@ -167,7 +206,7 @@ time = int(input("Length of Investment (in days): "))
 stocks = 0
 
 for i in range(time):
-    pred_next = float(np.ravel(predMSQ[i+1])[0])
+    pred_next = float(np.ravel(predMSE[i+1])[0])
     price_now = float(np.ravel(Y[i])[0])
 
     k=round(int((pred_next/price_now)*6),0)
@@ -183,3 +222,4 @@ final_price = float(np.ravel(Y[time])[0])
 money = money + stocks * final_price
 
 print(f"Final Amount: {ticker.info['currency']}", money)
+
