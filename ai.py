@@ -108,11 +108,11 @@ history = lstm.fit(
 lstmp = lstm.predict(X_lstm).flatten()
 lstmPred = lstm.predict(X_test_lstm).flatten()
 
-lstmMSQ = mean_squared_error(Y_test_lstm, lstmPred)
+lstmMSE = mean_squared_error(Y_test_lstm, lstmPred)
 lstmMAE = mean_absolute_error(Y_test_lstm, lstmPred)
 
 print("\nLSTM RESULTS")
-print("LSTM MSE:", lstmMSQ)
+print("LSTM MSE:", lstmMSE)
 print("LSTM MAE:", lstmMAE)
 
 
