@@ -34,8 +34,8 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, shuffle
 
 baseline_value = np.mean(Y_test)
 baseline_pred = np.full(len(Y_test), baseline_value)
-baselineMSQ = mean_squared_error(Y_test, baseline_pred)
-print("Baseline MSQ :", baselineMSQ)
+baselineMSE = mean_squared_error(Y_test, baseline_pred)
+print("Baseline MSE :", baselineMSE)
 
 lin = linear_model.LinearRegression()
 lin.fit(X_train, Y_train)
