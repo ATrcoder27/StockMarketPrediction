@@ -204,7 +204,6 @@ print("")
 print("")
 
 print("Initializing Game...")
-print("Initializing Game...")
 money = int(input(f"Starting Amount: {ticker.info['currency']}"))
 time = int(input("Length of Investment (in days): "))
 stocks = 0
